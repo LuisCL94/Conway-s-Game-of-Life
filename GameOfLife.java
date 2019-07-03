@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -13,11 +15,19 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class GameOfLife extends JFrame {
 
 	private JPanel contentPane;
-
+	private JPanel panelGame;
+	private JButton play_stop_button;
+	private JComboBox cellsComboBox;
+	private JLabel countGenLabel;
+	private JButton nextButton;
+	private JSlider speedSlider;
+	private JSlider sizeSlider;
 	/**
 	 * Launch the application.
 	 */
@@ -47,47 +57,47 @@ public class GameOfLife extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
-		panel.setBounds(0, 0, 820, 509);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		panelGame = new JPanel();
+		panelGame.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
+		panelGame.setBounds(12, 0, 795, 509);
+		contentPane.add(panelGame);
+		panelGame.setLayout(null);
 		
-		JButton play_stop_button = new JButton("PLAY");
+		ImageIcon grid = new ImageIcon("grid.png");
+		
+		play_stop_button = new JButton("PLAY");
 		play_stop_button.setBounds(284, 521, 71, 25);
 		contentPane.add(play_stop_button);
 		
-		JLabel lblNewLabel = new JLabel("0");
-		lblNewLabel.setBounds(780, 526, 70, 15);
-		contentPane.add(lblNewLabel);
+		countGenLabel = new JLabel("0");
+		countGenLabel.setBounds(780, 526, 70, 15);
+		contentPane.add(countGenLabel);
 		
-		String[] cells = {"Gosper Glider Gun", "Glider"};
-		JComboBox cellsComboBox = new JComboBox(cells);
-		cellsComboBox.setModel(new DefaultComboBoxModel(new String[] {"Gosper Glider Gun", "Glider", "Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"}));
+		String[] cells = {"Gosper Glider Gun", "Glider", "Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
+		cellsComboBox = new JComboBox(cells);
 		cellsComboBox.setBounds(10, 521, 192, 25);
 		contentPane.add(cellsComboBox);
 		
-		JButton nextButton = new JButton("NEXT");
+		nextButton = new JButton("NEXT");
+		nextButton.setBounds(214, 521, 71, 25);
+		contentPane.add(nextButton);
+		
+		speedSlider = new JSlider();
+		speedSlider.setBounds(400, 525, 150, 16);
+		contentPane.add(speedSlider);
+		
+		sizeSlider = new JSlider();
+		sizeSlider.setBounds(591, 525, 150, 16);
+		contentPane.add(sizeSlider);
+		
 		nextButton.addActionListener(new ActionListener() {
 			int x = 0;
 			public void actionPerformed(ActionEvent e) {
 			x++;
-			lblNewLabel.setText(Integer.toString(x));
+			countGenLabel.setText(Integer.toString(x));
 
 			}
 		});
-		nextButton.setBounds(214, 521, 71, 25);
-		contentPane.add(nextButton);
-		
-		JSlider speedSlider = new JSlider();
-		speedSlider.setBounds(400, 525, 150, 16);
-		contentPane.add(speedSlider);
-		
-		JSlider slider = new JSlider();
-		slider.setBounds(591, 525, 150, 16);
-		contentPane.add(slider);
-		
-
 		
 		play_stop_button.addActionListener(new ActionListener() {
 			int x = 0;
@@ -101,5 +111,6 @@ public class GameOfLife extends JFrame {
 				x++;
 			}
 		});
+	
 	}
 }
