@@ -1,10 +1,10 @@
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.awt.event.*;
 
+// 
 public class GameOfLife {
-	
+
 	private JFrame frame = new JFrame();
 	private GamePanel panelGame = new GamePanel();
 	private JButton play_stop_button = new JButton();
@@ -36,35 +36,35 @@ public class GameOfLife {
 		
 		frame.setTitle("Conway`s Game of Life");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 820, 595);
+		frame.setSize(923, 697);
 		frame.setLayout(null);
+		// panelGame.addMouseListener(this);
 		frame.add(panelGame);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		
 		play_stop_button.setText("PLAY"); //set initial text 
-		play_stop_button.setBounds(284, 521, 71, 25);
-		frame.add(play_stop_button);
+		play_stop_button.setBounds(284, 623, 71, 25);
+		frame.getContentPane().add(play_stop_button);
 		
 		countGenLabel.setText("0"); //set initial value 
-		countGenLabel.setBounds(780, 526, 70, 15);
-		frame.add(countGenLabel);
+		countGenLabel.setBounds(780, 626, 70, 15);
+		frame.getContentPane().add(countGenLabel);
 		
-		String[] cells = {"Gosper Glider Gun", "Glider", "Lightweight Spaceship", 
-    "Tumbler", "Diehard", "Acorn"};
+		String[] cells = {"Create Cell","Gosper Glider Gun", "Glider", "Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
 		cellsComboBox.setModel(new DefaultComboBoxModel(cells));
-		cellsComboBox.setBounds(10, 521, 192, 25);
-		frame.add(cellsComboBox);
+		cellsComboBox.setBounds(10, 623, 192, 25);
+		frame.getContentPane().add(cellsComboBox);
 		
 		nextButton.setText("NEXT");
-		nextButton.setBounds(214, 521, 71, 25);
-		frame.add(nextButton);
+		nextButton.setBounds(214, 623, 71, 25);
+		frame.getContentPane().add(nextButton);
 		
-		speedSlider.setBounds(400, 525, 150, 16);
-		frame.add(speedSlider);
+		speedSlider.setBounds(400, 626, 150, 16);
+		frame.getContentPane().add(speedSlider);
 		
-		sizeSlider.setBounds(591, 525, 150, 16);
-		frame.add(sizeSlider);
+		sizeSlider.setBounds(591, 626, 150, 16);
+		frame.getContentPane().add(sizeSlider);
 		
 		nextButton.addActionListener(new ActionListener() {
 			int x = 0;
