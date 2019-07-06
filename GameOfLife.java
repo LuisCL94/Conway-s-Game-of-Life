@@ -1,8 +1,8 @@
 import javax.swing.*;
+import javax.swing.event.*; 
 import java.awt.*;
 import java.awt.event.*;
 
-// 
 public class GameOfLife {
 
 	private JFrame frame = new JFrame();
@@ -12,7 +12,7 @@ public class GameOfLife {
 	private JLabel countGenLabel = new JLabel();
 	private JButton nextButton = new JButton();
 	private JSlider speedSlider = new JSlider();
-	private JSlider sizeSlider = new JSlider();
+	private JSlider sizeSlider = new JSlider(2, 20);
 	/**
 	 * Launch the application.
 	 */
@@ -33,13 +33,14 @@ public class GameOfLife {
 	 * Create the frame.
 	 */
 	public GameOfLife() {
-		
+		panelGame.setCellSize(15);
+
 		frame.setTitle("Conway`s Game of Life");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(923, 697);
 		frame.setLayout(null);
-		// panelGame.addMouseListener(this);
 		frame.add(panelGame);
+		
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		
@@ -51,7 +52,9 @@ public class GameOfLife {
 		countGenLabel.setBounds(780, 626, 70, 15);
 		frame.getContentPane().add(countGenLabel);
 		
-		String[] cells = {"Create Cell","Gosper Glider Gun", "Glider", "Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
+		String[] cells = {"Create Cell","Gosper Glider Gun", "Glider", 
+			"Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
+
 		cellsComboBox.setModel(new DefaultComboBoxModel(cells));
 		cellsComboBox.setBounds(10, 623, 192, 25);
 		frame.getContentPane().add(cellsComboBox);
@@ -61,9 +64,19 @@ public class GameOfLife {
 		frame.getContentPane().add(nextButton);
 		
 		speedSlider.setBounds(400, 626, 150, 16);
+
 		frame.getContentPane().add(speedSlider);
 		
 		sizeSlider.setBounds(591, 626, 150, 16);
+		sizeSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				System.out.println(sizeSlider.getValue());
+				panelGame.setCellSize(sizeSlider.getValue());
+				panelGame.repaint();
+
+			}
+		});
+
 		frame.getContentPane().add(sizeSlider);
 		
 		nextButton.addActionListener(new ActionListener() {
