@@ -7,14 +7,23 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GamePanel extends JPanel implements MouseListener {  
-  private int cellSize;//cell side size
   
-  // private gridColor;
-  // private aliveCellColor;
-  // private deadCellColor;
+  private int cellSize;//cell side size
+
+  private Color gridColor = Color.LIGHT_GRAY;
+  private Color aliveCellColor = Color.BLACK;
+  private Color deadCellColor = Color.WHITE;
+
+  boolean[][] grid = new boolean[900][600];
   public GamePanel() {  
-    setBackground(Color.WHITE);
-    setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+    
+    // grid[10][10]=true;
+    // grid[10][11]=true;
+    // grid[10][12]=true;
+    // grid[10][13]=true;
+
+    setBackground(deadCellColor);
+    setBorder(new LineBorder(gridColor, 1));
 		setBounds(10, 10, 900+1, 600+1);
 		setLayout(null);
     addMouseListener(this);  
@@ -31,22 +40,24 @@ public class GamePanel extends JPanel implements MouseListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-    g.setColor(Color.LIGHT_GRAY);
+    g.setColor(gridColor);
     // draw the rows
     for (int i = 0; i<=this.getWidth(); i++)
       g.drawLine(0, i * cellSize, this.getWidth(), i * cellSize);
     
-    // draw the columns
+    //draw the columns
     for (int i = 0; i <= this.getWidth(); i++)
       g.drawLine(i * cellSize, 0, i * cellSize, this.getWidth());
 
-
-    g.setColor(Color.BLACK);
-    g.fillRect (6*cellSize+1, 6*cellSize+1, cellSize-1, cellSize-1);
-    g.fillRect (7*cellSize+1, 6*cellSize+1, cellSize-1, cellSize-1);
-    g.fillRect (6*cellSize+1, 7*cellSize+1, cellSize-1, cellSize-1);
-    g.fillRect (7*cellSize+1, 7*cellSize+1, cellSize-1, cellSize-1);
-
+    for (int i = 0; i<=this.getWidth()/cellSize; i++) {
+      for (int j = 0; j <= this.getWidth()/cellSize; j++) {
+        if(grid[i][j]==true) {
+          g.setColor(aliveCellColor);
+          g.fillRect(i*cellSize+1, j*cellSize+1, cellSize-1, cellSize-1);
+          }
+        }
+      }
+    
 	}	
   
    
@@ -69,12 +80,10 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent ev) {
-		// System.out.println(ev.getX() + "," + ev.getY());
 		int row = ev.getY() / cellSize;
 		int col = ev.getX() / cellSize;
 		System.out.println(row + "," + col);
-		// g.setColor(Color.BLUE);
-		// g.fillRect ( row*10 , col*10 , 10, 10);
-
+    grid[col][row] = !grid[col][row];
+    super.repaint();
 	}
 }
