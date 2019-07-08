@@ -11,8 +11,8 @@ public class GamePanel extends JPanel implements MouseListener {
   private int cellSize;//cell side size
 
   private Color gridColor = Color.LIGHT_GRAY;
-  private Color aliveCellColor = Color.BLACK;
-  private Color deadCellColor = Color.WHITE;
+  private Color aliveCellColor = Color.WHITE;
+  private Color deadCellColor = Color.BLACK;
 
   boolean[][] grid = new boolean[900][600];
   public GamePanel() {  
@@ -27,6 +27,13 @@ public class GamePanel extends JPanel implements MouseListener {
 		setBounds(10, 10, 900+1, 600+1);
 		setLayout(null);
     addMouseListener(this);  
+  }
+
+  public void cleanPanel() {
+    for(int i = 0; i<=this.getWidth()/cellSize; i++) 
+      for(int j = 0; j <= this.getWidth()/cellSize; j++) 
+        grid[i][j]=false;
+    this.repaint(); 
   }
 
   public int getCellSize() {
@@ -54,9 +61,9 @@ public class GamePanel extends JPanel implements MouseListener {
         if(grid[i][j]==true) {
           g.setColor(aliveCellColor);
           g.fillRect(i*cellSize+1, j*cellSize+1, cellSize-1, cellSize-1);
-          }
         }
       }
+    }
     
 	}	
   
