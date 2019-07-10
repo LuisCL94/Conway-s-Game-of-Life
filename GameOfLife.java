@@ -1,9 +1,9 @@
-import javax.swing.*;
+	import javax.swing.*;
 import javax.swing.event.*; 
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameOfLife {
+public class GameOfLife implements ActionListener {
 
 	private JFrame frame = new JFrame();
 	private GamePanel panelGame = new GamePanel();
@@ -45,27 +45,15 @@ public class GameOfLife {
 		frame.setSize(923, 720);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(panelGame);
-		
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		
+	
 		play_stop_button.setIcon(new ImageIcon("/home/luiz/MY_PROJECTS/Conway`s Game of Life/Icons/play2.png"));
 		play_stop_button.setBounds(268, 630, 35, 30);
-		frame.getContentPane().add(play_stop_button);
 		
-		cleanButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panelGame.cleanPanel();
-			}
-		});
 		cleanButton.setIcon(new ImageIcon("/home/luiz/MY_PROJECTS/Conway`s Game of Life/Icons/clean.png"));
 		cleanButton.setBounds(310, 630, 35, 30);
-		frame.getContentPane().add(cleanButton);
-
 		
 		countGenLabel.setText("0"); //set initial value 
 		countGenLabel.setBounds(871, 626, 70, 30);
-		frame.getContentPane().add(countGenLabel);
 		
 		String[] cells = {"Create Cell","Gosper Glider Gun", "Glider", 
 			"Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
@@ -75,7 +63,6 @@ public class GameOfLife {
 		frame.getContentPane().add(cellsComboBox);
 		nextButton.setIcon(new ImageIcon("Icons/next1.png"));
 		nextButton.setBounds(220, 630, 41, 30);
-		frame.getContentPane().add(nextButton);
 		
 		speedIconLabel.setIcon(new ImageIcon("Icons/speed1.png"));
 		speedIconLabel.setBounds(400, 620, 60, 48);
@@ -90,9 +77,6 @@ public class GameOfLife {
 		frame.getContentPane().add(speedSlider);
 		speedLabel.setText("speed game = " + speedSlider.getValue());
 		speedLabel.setBounds(450, 643, 140, 15);
-		frame.getContentPane().add(speedLabel);
-		frame.getContentPane().add(speedIconLabel);
-		
 		
 		sizeLabel.setBounds(693, 643, 140, 15);
 		sizeIconLabel.setIcon(new ImageIcon("Icons/grid1.png"));
@@ -100,6 +84,7 @@ public class GameOfLife {
 		sizeSlider.setValue(panelGame.getCellSize());
 		sizeLabel.setText("cell/grid  size = " + sizeSlider.getValue());
 		sizeSlider.setBounds(683, 628, 150, 16);
+		
 		sizeSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				System.out.println(sizeSlider.getValue());
@@ -109,16 +94,20 @@ public class GameOfLife {
 
 			}
 		});
-		frame.getContentPane().add(sizeLabel);
-		frame.getContentPane().add(sizeSlider);
-		frame.getContentPane().add(sizeIconLabel);
-		
+
+		cleanButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelGame.cleanGamePanel();
+			}
+		});
+
 		nextButton.addActionListener(new ActionListener() {
 			int x = 0;
 			public void actionPerformed(ActionEvent e) {
 				x++;
 				countGenLabel.setText(Integer.toString(x));
-				// nextButton.setIcon(new ImageIcon(getClass().getResource("Icons/grid2.png")));
+				panelGame.nextGeneration();
+				panelGame.repaint();
 			}
 		});
 
@@ -134,6 +123,30 @@ public class GameOfLife {
 				x++;
 			}
 		});
-	
+
+		frame.getContentPane().add(play_stop_button);
+
+		frame.getContentPane().add(countGenLabel);
+
+		frame.getContentPane().add(cleanButton);
+
+		frame.getContentPane().add(nextButton);
+
+		frame.getContentPane().add(speedLabel);
+		frame.getContentPane().add(speedIconLabel);
+
+		frame.getContentPane().add(sizeLabel);
+		frame.getContentPane().add(sizeSlider);
+		frame.getContentPane().add(sizeIconLabel);
+		
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+
+	}
+	public void actionPerformed(ActionEvent e) {		
+
+	}
+	public void run() {
+
 	}
 }
