@@ -10,17 +10,13 @@ public class GamePanel extends JPanel implements MouseListener {
   
   private int cellSize;//cell side size
   private Color gridColor = Color.LIGHT_GRAY;
-  private Color aliveCellColor = Color.BLACK;
-  private Color deadCellColor = Color.WHITE;
+  private Color aliveCellColor = Color.WHITE;
+  private Color deadCellColor = Color.BLACK;
 
   private boolean[][] grid = new boolean[900][600];
   private boolean[][] newGrid = new boolean[900][600];
   
   public GamePanel() {  
-    // grid[10][10]=true;
-    // grid[10][11]=true;
-    // grid[10][12]=true;
-    // grid[10][13]=true;
 
     setBackground(deadCellColor);
     setBorder(new LineBorder(gridColor, 1));
@@ -58,6 +54,101 @@ public class GamePanel extends JPanel implements MouseListener {
         setCell(i,j,false);
   
     repaint(); 
+  }
+
+  public void createCell() {
+      cleanGamePanel();
+  }
+
+  public void gliderGun() {
+    cleanGamePanel();
+
+    setCell(6,9,true);
+    setCell(7,9,true);
+    setCell(6,10,true);
+    setCell(7,10,true);
+
+    setCell(6,19,true);
+    setCell(7,19,true);
+    setCell(8,19,true);
+    setCell(5,20,true);
+    setCell(4,21,true);
+    setCell(4,22,true);
+    setCell(9,20,true);
+    setCell(10,21,true);
+    setCell(10,22,true);
+    
+    setCell(7,23,true);
+    setCell(5,24,true);
+    setCell(9,24,true);
+    setCell(6,25,true);
+    setCell(7,25,true);
+    setCell(8,25,true);
+    setCell(7,26,true);
+    setCell(6,29,true);
+    setCell(6,30,true);
+    setCell(5,30,true);
+    setCell(5,29,true);
+    setCell(4,29,true);
+    setCell(4,30,true);
+    setCell(3,31,true);
+    setCell(7,31,true);
+    setCell(3,33,true);
+    setCell(2,33,true);
+    setCell(7,33,true);
+    setCell(8,33,true);
+
+    setCell(4,43,true);
+    setCell(5,43,true);
+    setCell(4,44,true);
+    setCell(5,44,true);
+
+    repaint();
+  }
+
+  public void glider() {
+    cleanGamePanel();
+
+    setCell(4,12,true);    
+    setCell(5,13,true);
+    setCell(6,13,true);
+    setCell(6,12,true);
+    setCell(6,11,true);
+
+    repaint();    
+  }
+
+  public void lightweightSpaceship() {
+    cleanGamePanel();
+
+    setCell(14,6,true);    
+    setCell(13,7,true);
+    setCell(13,8,true);
+    setCell(13,9,true);
+    setCell(13,10,true);
+    setCell(14,10,true);
+    setCell(15,10,true);
+    setCell(16,9,true);
+    setCell(16,6,true);
+
+    repaint();
+  }
+
+  public void tenCellRow() {
+    cleanGamePanel();
+
+    setCell(13,17,true);    
+    setCell(13,18,true);    
+    setCell(13,19,true);    
+    setCell(13,20,true);    
+    setCell(13,21,true);    
+    setCell(13,22,true);    
+    setCell(13,23,true);    
+    setCell(13,24,true);    
+    setCell(13,25,true);    
+    setCell(13,26,true);    
+    
+    repaint();
   }
 
   public int neighborhood(int i, int j) {

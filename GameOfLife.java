@@ -1,4 +1,4 @@
-	import javax.swing.*;
+import javax.swing.*;
 import javax.swing.event.*; 
 import java.awt.*;
 import java.awt.event.*;
@@ -55,8 +55,8 @@ public class GameOfLife implements ActionListener {
 		countGenLabel.setText("0"); //set initial value 
 		countGenLabel.setBounds(871, 626, 70, 30);
 		
-		String[] cells = {"Create Cell","Gosper Glider Gun", "Glider", 
-			"Lightweight Spaceship", "Tumbler", "Diehard", "Acorn"};
+		String[] cells = {"Random","Create Cell","Gosper Glider Gun", "Glider", 
+			"Lightweight Spaceship", "10 Cell Row", "Tumbler", "Diehard", "Acorn"};
 
 		cellsComboBox.setModel(new DefaultComboBoxModel(cells));
 		cellsComboBox.setBounds(10, 631, 192, 25);
@@ -92,6 +92,23 @@ public class GameOfLife implements ActionListener {
 				sizeLabel.setText("cell/grid  size = " + sizeSlider.getValue());
 				panelGame.repaint();
 
+			}
+		});
+		
+		cellsComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// if(cellsComboBox.getSelectedItem() == "Random")
+					// panelGame.randomCells();
+				if(cellsComboBox.getSelectedItem() == "Create Cell")
+					panelGame.createCell();
+				else if(cellsComboBox.getSelectedItem() == "Gosper Glider Gun")
+					panelGame.gliderGun();
+				else if(cellsComboBox.getSelectedItem() == "Glider")
+					panelGame.glider();
+				else if(cellsComboBox.getSelectedItem() == "Lightweight Spaceship")
+					panelGame.lightweightSpaceship();
+				else if(cellsComboBox.getSelectedItem() == "10 Cell Row")
+					panelGame.tenCellRow();
 			}
 		});
 
