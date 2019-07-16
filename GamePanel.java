@@ -8,10 +8,10 @@ import java.awt.event.*;
 
 public class GamePanel extends JPanel implements MouseListener {  
   
-  private int cellSize;//cell side size
+  private int cellSize;
   private Color gridColor = Color.LIGHT_GRAY;
-  private Color aliveCellColor = Color.WHITE;
-  private Color deadCellColor = Color.BLACK;
+  private Color aliveCellColor = Color.BLACK;
+  private Color deadCellColor = Color.WHITE;
 
   private boolean[][] grid = new boolean[900][600];
   private boolean[][] newGrid = new boolean[900][600];
@@ -49,8 +49,8 @@ public class GamePanel extends JPanel implements MouseListener {
   }
   
   public void cleanGamePanel() {
-    for(int i = 0; i<=getWidth()/getCellSize(); i++) 
-      for(int j = 0; j <= getWidth()/getCellSize(); j++)
+    for(int i = 0; i<=500; i++) 
+      for(int j = 0; j <= 500; j++)
         setCell(i,j,false);
   
     repaint(); 
