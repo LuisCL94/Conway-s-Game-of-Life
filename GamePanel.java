@@ -5,6 +5,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GamePanel extends JPanel implements MouseListener {  
   
@@ -12,11 +14,20 @@ public class GamePanel extends JPanel implements MouseListener {
   private Color gridColor = Color.LIGHT_GRAY;
   private Color aliveCellColor = Color.BLACK;
   private Color deadCellColor = Color.WHITE;
+  private int generation;
+  private int speedGame;
 
   private boolean[][] grid = new boolean[900][600];
   private boolean[][] newGrid = new boolean[900][600];
-  
+
+  Map<Integer, Integer > speed = new HashMap<Integer,Integer>();
+
   public GamePanel() {  
+    speed.put(5, 15);
+  	speed.put(4, 65);
+  	speed.put(3, 115);
+  	speed.put(2, 500);
+  	speed.put(1, 1000); 
 
     setBackground(deadCellColor);
     setBorder(new LineBorder(gridColor, 1));
@@ -48,12 +59,31 @@ public class GamePanel extends JPanel implements MouseListener {
     this.cellSize = cellSize;
   }
   
+  public int getGeneration() {
+    return generation;
+  }
+
+  public void setGeneration(int gen) {
+    this.generation = generation;
+  }
+  
   public void cleanGamePanel() {
     for(int i = 0; i<=500; i++) 
       for(int j = 0; j <= 500; j++)
         setCell(i,j,false);
   
-    repaint(); 
+    this.repaint(); 
+  }
+  public int getSpeed() {
+    return speedGame;
+  }
+
+  public void setSpeed(int speedGame) {
+    this.speedGame = speedGame;
+  }
+
+  public int SpeedGame(int num) {
+    return speed.get(num);
   }
 
   public void createCell() {
@@ -62,6 +92,7 @@ public class GamePanel extends JPanel implements MouseListener {
 
   public void gliderGun() {
     cleanGamePanel();
+    setGeneration(0);
 
     setCell(6,9,true);
     setCell(7,9,true);

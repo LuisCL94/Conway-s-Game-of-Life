@@ -12,7 +12,7 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 	private JButton play_stop_button = new JButton();
 	private JButton cleanButton = new JButton();
 	private JLabel speedIconLabel = new JLabel();
-	private JSlider speedSlider = new JSlider(1, 10);
+	private JSlider speedSlider = new JSlider(1, 5);
 	private JLabel speedLabel = new JLabel();
 	private JLabel sizeIconLabel = new JLabel();
 	private JSlider sizeSlider = new JSlider(2, 20);
@@ -34,6 +34,8 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 	}
 
 	public GameOfLife() {
+
+		panelGame.setSpeed(3);
 		panelGame.setCellSize(15);
 
 		frame.setTitle("Conway`s Game of Life");
@@ -58,16 +60,17 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 		
 		speedIconLabel.setIcon(new ImageIcon("Icons/speed1.png"));
 		speedIconLabel.setBounds(400, 620, 60, 48);
-		speedSlider.setBounds(435, 628, 150, 16);
+		speedSlider.setValue(panelGame.getSpeed());
+		speedSlider.setBounds(442, 628, 100, 16);
 		speedLabel.setText("speed game = " + speedSlider.getValue());
-		speedLabel.setBounds(450, 643, 140, 15);
+		speedLabel.setBounds(440, 643, 140, 15);
 
 		sizeIconLabel.setIcon(new ImageIcon("Icons/grid1.png"));
-		sizeIconLabel.setBounds(652, 620, 41, 48);
+		sizeIconLabel.setBounds(627, 620, 41, 48);
 		sizeSlider.setValue(panelGame.getCellSize());
-		sizeSlider.setBounds(683, 628, 150, 16);
-		sizeLabel.setText("cell/grid  size = " + sizeSlider.getValue());
-		sizeLabel.setBounds(693, 643, 140, 15);
+		sizeSlider.setBounds(658, 628, 150, 16);
+		sizeLabel.setText("cell/grid size = 15");
+		sizeLabel.setBounds(668, 643, 140, 15);
 
 		countGenLabel.setText("0"); //set initial value 
 		countGenLabel.setBounds(871, 626, 70, 30);
@@ -95,26 +98,44 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 		frame.setVisible(true);
 	}
 
-	int x = 1;
+	int x = 0;
 	int y = 0;
 	public void actionPerformed(ActionEvent e) {		
 		if(e.getSource().equals(cellsComboBox)) {
 
-				if(cellsComboBox.getSelectedItem() == "Create Cell")
+				if(cellsComboBox.getSelectedItem() == "Create Cell") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));
 					panelGame.createCell();
-				else if(cellsComboBox.getSelectedItem() == "Gosper Glider Gun")
+				}
+
+				else if(cellsComboBox.getSelectedItem() == "Gosper Glider Gun") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));
 					panelGame.gliderGun();
-				else if(cellsComboBox.getSelectedItem() == "Glider")
+				}
+
+				else if(cellsComboBox.getSelectedItem() == "Glider") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));
 					panelGame.glider();
-				else if(cellsComboBox.getSelectedItem() == "Lightweight Spaceship")
+				}
+
+				else if(cellsComboBox.getSelectedItem() == "Lightweight Spaceship") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));					
 					panelGame.lightweightSpaceship();
-				else if(cellsComboBox.getSelectedItem() == "10 Cell Row")
+				}	
+				else if(cellsComboBox.getSelectedItem() == "10 Cell Row") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));	
 					panelGame.tenCellRow();
-			
+				}
 		}
 
 		if(e.getSource().equals(nextButton)) {
-				countGenLabel.setText(Integer.toString(x++));
+				x++;
+				countGenLabel.setText(Integer.toString(x));
 				panelGame.nextGeneration();
 				panelGame.repaint();
 		}
@@ -134,7 +155,9 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 		}
 	
 		if(e.getSource().equals(cleanButton)) {
-				panelGame.cleanGamePanel();			
+				x=0;
+				countGenLabel.setText(Integer.toString(x));	
+				panelGame.cleanGamePanel();		
 		}
 	
 	}
@@ -147,7 +170,7 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 			panelGame.repaint();
 		}
 		if(speedSlider.getValueIsAdjusting()) {
-			System.out.println(speedSlider.getValue());
+			panelGame.setSpeed(speedSlider.getValue());
 			speedLabel.setText("speed game = " + speedSlider.getValue());
 			panelGame.repaint();
 		}
@@ -155,11 +178,12 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 
 	public void run() {
 		while(running == true) {
-			countGenLabel.setText(Integer.toString(x++));
+			x++;
+			countGenLabel.setText(Integer.toString(x));
 			panelGame.nextGeneration();
 			panelGame.repaint();	
 			try{
-				Thread.sleep(35); //13, 35, 57, 79, 101, 123, 150, 172, 194, 216 
+				Thread.sleep(panelGame.SpeedGame(panelGame.getSpeed())); //15, 40, 65, 79, 101, 123, 150, 172, 194, 216 
 			}catch(	Exception ex) {
 				ex.printStackTrace();
 			}
