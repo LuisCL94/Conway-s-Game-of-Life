@@ -177,6 +177,23 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 					countGenLabel.setText(Integer.toString(x));	
 					gameWindow.tenCellRow();
 				}
+				else if(cellsComboBox.getSelectedItem() == "Tumbler") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));	
+					gameWindow.tumbler();
+				}
+				
+				else if(cellsComboBox.getSelectedItem() == "Diehard") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));	
+					gameWindow.diehard();
+				}		
+
+				else if(cellsComboBox.getSelectedItem() == "Acorn") {
+					x=0;
+					countGenLabel.setText(Integer.toString(x));	
+					gameWindow.acorn();
+				}
 		}
 
 		if(e.getSource().equals(nextButton)) {
