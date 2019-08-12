@@ -20,7 +20,7 @@ public class GameWindow extends JPanel implements MouseListener {
   private boolean[][] grid = new boolean[900][600];
   private boolean[][] newGrid = new boolean[900][600];
 
-  Map<Integer, Integer > speed = new HashMap<Integer,Integer>();
+  HashMap<Integer,Integer> speed = new HashMap<Integer,Integer>();
 
   public GameWindow() {  
     speed.put(6, 15);

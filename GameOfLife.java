@@ -17,25 +17,25 @@ import javax.swing.event.ChangeListener;
 
 public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 
-  private JFrame frame = new JFrame();
-  private JLayeredPane layeredPane = new JLayeredPane();
-  private JPanel gamePanel = new JPanel();
-  private GameWindow gameWindow = new GameWindow();
-  private JComboBox cellsComboBox = new JComboBox();
-  private JButton nextButton = new JButton();
-  private JButton play_stop_button = new JButton();
-  private JButton cleanButton = new JButton();
-  private JLabel speedIconLabel = new JLabel();
-  private JSlider speedSlider = new JSlider(1, 6);
-  private JLabel speedLabel = new JLabel();
-  private JLabel sizeIconLabel = new JLabel();
-  private JSlider sizeSlider = new JSlider(2, 20);
-  private JLabel sizeLabel = new JLabel();
-  private JLabel countGenLabel = new JLabel();
-  private JButton infoButton = new JButton();
-  private JPanel infoPanel = new JPanel();
-  private JButton backButton = new JButton("BACK");
-  private JButton invertButton = new JButton("");
+  private JFrame frame;
+  private JLayeredPane layeredPane;
+  private JPanel gamePanel;
+  private GameWindow gameWindow;
+  private JComboBox <String> cellsComboBox;
+  private JButton nextButton;
+  private JButton play_stop_button;
+  private JButton cleanButton;
+  private JLabel speedIconLabel;
+  private JSlider speedSlider;
+  private JLabel speedLabel;
+  private JLabel sizeIconLabel;
+  private JSlider sizeSlider;
+  private JLabel sizeLabel;
+  private JLabel countGenLabel;
+  private JButton infoButton;
+  private JPanel infoPanel;
+  private JButton backButton;
+  private JButton invertButton;
 
   boolean running = false;
 
@@ -60,18 +60,26 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 
   public GameOfLife() {
 
+    frame = new JFrame();
     frame.setTitle("Conway`s Game of Life");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(1020, 720);
     frame.getContentPane().setLayout(null);
+
+    layeredPane = new JLayeredPane();
     layeredPane.setLocation(0, 0);
     layeredPane.setSize(1004, 683);
-    frame.getContentPane().add(layeredPane);
     layeredPane.setLayout(new CardLayout(0, 0));
-
+    
+    frame.getContentPane().add(layeredPane);
+    
+    gamePanel = new JPanel();
+    
     layeredPane.add(gamePanel, "name_34924502800590");
+ 
     gamePanel.setLayout(null);
-
+  
+    gameWindow = new GameWindow();
     gameWindow.setBounds(10, 10, 901, 601);
     gameWindow.setSpeed(4);
     gameWindow.setCellSize(15);
@@ -80,47 +88,71 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
 
     gameWindow.setBackground(gameWindow.getDeadCellColor());
     gamePanel.add(gameWindow);
-
+    
+    speedSlider = new JSlider(1, 6);
     speedSlider.setValue(gameWindow.getSpeed());
+    speedSlider.setBounds(436, 628, 100, 16);
+
+    sizeSlider = new JSlider(2, 20);
     sizeSlider.setValue(gameWindow.getCellSize());
+    sizeSlider.setBounds(658, 628, 150, 16);
 
     String[] cells = {"Random", "Create Cell", "Gosper Glider Gun", "Glider",
         "Lightweight Spaceship", "10 Cell Row", "Tumbler", "Diehard", "Acorn"};
 
-    cellsComboBox.setModel(new DefaultComboBoxModel(cells));
+    cellsComboBox = new JComboBox<>(cells);
+    // cellsComboBox.setModel(new DefaultComboBoxModel(cells));
     cellsComboBox.setBounds(10, 631, 192, 25);
+    
+    nextButton = new JButton();
     nextButton.setToolTipText("next generation");
-
     nextButton.setIcon(new ImageIcon(getClass().getResource("Icons/next1.png")));
     nextButton.setBounds(220, 630, 41, 30);
-    play_stop_button.setToolTipText("play");
 
+    play_stop_button = new JButton();
+    play_stop_button.setToolTipText("play");
     play_stop_button.setIcon(new ImageIcon(getClass().getResource("Icons/play2.png")));
     play_stop_button.setBounds(268, 630, 35, 30);
-    cleanButton.setToolTipText("clean");
 
+    cleanButton = new JButton();
+    cleanButton.setToolTipText("clean");
     cleanButton.setIcon(new ImageIcon(getClass().getResource("Icons/clean.png")));
     cleanButton.setBounds(310, 630, 35, 30);
-
+    
+    speedIconLabel = new JLabel();
     speedIconLabel.setIcon(new ImageIcon(getClass().getResource("Icons/speed1.png")));
     speedIconLabel.setBounds(400, 620, 60, 48);
-    speedSlider.setBounds(436, 628, 100, 16);
+
+    speedLabel = new JLabel();
     speedLabel.setText("speed game = " + speedSlider.getValue());
     speedLabel.setBounds(440, 643, 140, 15);
 
+    sizeIconLabel = new JLabel();
     sizeIconLabel.setIcon(new ImageIcon(getClass().getResource("Icons/grid1.png")));
-
     sizeIconLabel.setBounds(627, 620, 41, 48);
-    sizeSlider.setBounds(658, 628, 150, 16);
+
+    sizeLabel = new JLabel();
     sizeLabel.setText("cell/grid size = 15");
     sizeLabel.setBounds(668, 643, 140, 15);
 
+    countGenLabel = new JLabel();
     countGenLabel.setText("0"); // set initial value
     countGenLabel.setBounds(871, 626, 70, 30);
+
+    infoButton = new JButton();
     infoButton.setToolTipText("info");
 
     infoButton.setIcon(new ImageIcon(getClass().getResource("Icons/info2.png")));
     infoButton.setBounds(938, 194, 41, 60);
+    
+    invertButton = new JButton("");
+    invertButton.setToolTipText("invert colors");
+    invertButton.addActionListener(this);
+    invertButton.setBounds(938, 400, 45, 48);
+    invertButton.setIcon(new ImageIcon(getClass().getResource("Icons/invert1.png")));
+
+    backButton = new JButton("BACK");
+    backButton.setBounds(332, 646, 76, 25);
 
     cellsComboBox.addActionListener(this);
     nextButton.addActionListener(this);
@@ -130,9 +162,7 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
     sizeSlider.addChangeListener(this);
     infoButton.addActionListener(this);
     backButton.addActionListener(this);
-    invertButton.setToolTipText("invert colors");
-    invertButton.addActionListener(this);
-
+    
     gamePanel.add(cellsComboBox);
     gamePanel.add(nextButton);
     gamePanel.add(play_stop_button);
@@ -145,16 +175,13 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
     gamePanel.add(sizeLabel);
     gamePanel.add(countGenLabel);
     gamePanel.add(infoButton);
-
-    invertButton.setBounds(938, 400, 45, 48);
-    invertButton.setIcon(new ImageIcon(getClass().getResource("Icons/invert1.png")));
-
     gamePanel.add(invertButton);
 
-    layeredPane.add(infoPanel, "name_42708651229050");
-    infoPanel.setLayout(null);
-    backButton.setBounds(332, 646, 76, 25);
+    infoPanel = new JPanel();
 
+    layeredPane.add(infoPanel, "name_42708651229050");
+    
+    infoPanel.setLayout(null);
     infoPanel.add(backButton);
 
     frame.setLocationRelativeTo(null);
@@ -280,6 +307,5 @@ public class GameOfLife implements ActionListener, ChangeListener, Runnable {
       }
     }
   }
-
 
 }
